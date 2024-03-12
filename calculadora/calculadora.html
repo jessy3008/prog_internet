@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+  margin: 0;
+  padding: 0;
+}
+
+.calculadora {
+  max-width: 300px;
+  margin: 50px auto;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.calculadora h2 {
+  margin-top: 0;
+  text-align: center;
+}
+
+.calculadora input[type="number"] {
+  width: calc(100% - 10px);
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.botao-container {
+  text-align: center;
+}
+
+.calculadora button {
+  width: 100%;
+  padding: 15px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.calculadora button:hover {
+  background-color: #858585;
+}
+
+.resultado {
+  margin-top: 15px;
+  padding: 20px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+</style>
+</head>
+<body>
+
+<div class="calculadora">
+  <h2>Calculadora</h2>
+
+  <input type="number" id="numero1" placeholder="Digite o primeiro número">
+  <input type="number" id="numero2" placeholder="Digite o segundo número">
+
+  <div class="botao-container">
+    <button onclick="somar()">+</button>
+    <button onclick="subtrair()">-</button>
+    <button onclick="multiplicar()">x</button>
+    <button onclick="dividir()">÷</button>
+  </div>
+
+  <div class="resultado" id="resultado"></div>
+</div>
+
+<script>
+function somar() {
+  var num1 = parseFloat(document.getElementById("numero1").value);
+  var num2 = parseFloat(document.getElementById("numero2").value);
+  var resultado = num1 + num2;
+  document.getElementById("resultado").innerText = "Resultado: " + resultado;
+}
+
+function subtrair() {
+  var num1 = parseFloat(document.getElementById("numero1").value);
+  var num2 = parseFloat(document.getElementById("numero2").value);
+  var resultado = num1 - num2;
+  document.getElementById("resultado").innerText = "Resultado: " + resultado;
+}
+
+function multiplicar() {
+  var num1 = parseFloat(document.getElementById("numero1").value);
+  var num2 = parseFloat(document.getElementById("numero2").value);
+  var resultado = num1 * num2;
+  document.getElementById("resultado").innerText = "Resultado: " + resultado;
+}
+
+function dividir() {
+  var num1 = parseFloat(document.getElementById("numero1").value);
+  var num2 = parseFloat(document.getElementById("numero2").value);
+  if (num2 === 0) {
+    document.getElementById("resultado").innerText = "Não é possível dividir por zero";
+  } else {
+    var resultado = num1 / num2;
+    document.getElementById("resultado").innerText = "Resultado: " + resultado;
+  }
+}
+</script>
+
+</body>
+</html>

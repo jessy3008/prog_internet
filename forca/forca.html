@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jogo da Forca</title>
+<style>
+
+html {
+    background-color: rgb(216, 135, 174);
+}
+body {
+    font-family: Arial, sans-serif;
+}
+
+#container-jogo {
+    max-width: 600px;
+    margin: 50px auto;
+    text-align: center;
+}
+
+#exibir-palavra {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+#letras-utilizadas {
+    margin-bottom: 10px;
+    color: rgb(0, 0, 0);
+}
+
+#entrada-letra {
+    border-radius: 10px;
+    padding: 5px;
+    margin-right: 10px;
+}
+
+#botao-adivinhar {
+    color: rgb(158, 34, 55);
+    border-color: rgb(194, 42, 103);
+    border-radius: 15px;
+    padding: 5px 10px;
+    cursor:default;
+}
+
+#forca {
+    margin-top: 20px;
+    font-size: 1.5em;
+}
+
+#resultado {
+    margin-top: 20px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+<div id="container-jogo">
+    <div id="exibir-palavra"></div>
+    <div id="letras-utilizadas"></div>
+    <input type="text" id="entrada-letra" placeholder="Insira uma letra">
+    <button id="botao-adivinhar">Adivinhar</button>
+    <div id="forca"></div>
+    <div id="resultado"></div>
+</div>
+<script>
+const palavras = ["adriany", "elysson", "emilly", "everaldo", "giovanna", "klain","jackson","jennifer","jessica","deybson","felipe","joaopedro","joaovictor","ketlyn","laura","leon","luizlucas","maria","eduarda","pedrohenrique","phablo","raul","vitoria","viviane"];
+let palavraEscolhida = palavras[Math.floor(Math.random() * palavras.length)];
+let palavraExibida = "_".repeat(palavraEscolhida.length);
+let letrasUsadas = [];
+let erros = 0;
+
+const exibirPalavra = document.getElementById("exibir-palavra");
+const letrasUtilizadas = document.getElementById("letras-utilizadas");
+const entradaLetra = document.getElementById("entrada-letra");
+const botaoAdivinhar = document.getElementById("botao-adivinhar");
+const forca = document.getElementById("forca");
+const resultado = document.getElementById("resultado");
+
+exibirPalavra.textContent = palavraExibida;
+
+function atualizarPalavraExibida() {
+    exibirPalavra.textContent = palavraExibida.split("").join(" ");
+}
+
+function verificarLetra(letra) {
+    if (letrasUsadas.includes(letra)) {
+        alert("Letra já utilizada. Escolha outra.");
+        return;
+    }
+
+    letrasUsadas.push(letra);
+    letrasUtilizadas.textContent = `Letras utilizadas: ${letrasUsadas.join(", ")}`;
+
+    if (palavraEscolhida.includes(letra)) {
+        for (let i = 0; i < palavraEscolhida.length; i++) {
+            if (palavraEscolhida[i] === letra) {
+                palavraExibida = palavraExibida.substring(0, i) + letra + palavraExibida.substring(i + 1);
+            }
+        }
+        atualizarPalavraExibida();
+        if (!palavraExibida.includes("_")) {
+            resultado.textContent = "Parabéns! Você acertou a pessoa!";
+            entradaLetra.disabled = true;
+            botaoAdivinhar.disabled = true;
+        }
+    } else {
+        erros++;
+        desenharForca(erros);
+        if (erros === 6) {
+            resultado.textContent = `Você perdeu! A pessoa era: ${palavraEscolhida}`;
+            entradaLetra.disabled = true;
+            botaoAdivinhar.disabled = true;
+        }
+    }
+}
+
+function desenharForca(erros) {
+    // Lógica para desenhar a forca conforme o número de erros
+    // Aqui você pode implementar o desenho da forca com SVG, imagens, etc.
+}
+
+botaoAdivinhar.addEventListener("click", () => {
+    const letra = entradaLetra.value.toLowerCase();
+    entradaLetra.value = "";
+    verificarLetra(letra);
+});
+
+document.addEventListener("keydown", (event) => {
+    if (event.keyCode >= 65 && event.keyCode <= 90) {
+        const letra = event.key.toLowerCase();
+        verificarLetra(letra);
+    }
+});
+</script>
+</body>
+</html>
